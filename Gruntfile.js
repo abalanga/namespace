@@ -2,28 +2,35 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
 
-        jshint: {
-            files: ["namespace.js", "tests.js"]
-        },
+        clean: ["namespace.min.js", "namespace.min.map", "namespace.js.gz"],
 
-        uglify: {
+        compress: {
             release: {
-                options: {
-                    sourceMap: "namespace.min.map"
-                },
                 files: {
-                    "namespace.min.js": ["namespace.js"]
+                    "namespace.js.gz": "namespace.min.js"
                 }
             }
         },
 
-        clean: ["namespace.min.js", "namespace.min.map", "namespace.js.gz"],
+        copy: {
+            release: {
+                src: 'namespace.js',
+                dest: 'namespace.min.js'
+            }
+        },
 
-        compress: {
-            build: {
-                files: {
-                    "namespace.js.gz": "namespace.min.js"
-                }
+        jshint: {
+            files: ["namespace.js", "test.js"]
+        },
+
+        strip_code: {
+            options: {
+                start_comment: "test-hook",
+                end_comment: "end-test-hook"
+            },
+            release: {
+                // a list of files you want to strip code from
+                src: "namespace.min.js"
             }
         },
 
@@ -56,7 +63,17 @@ module.exports = function(grunt) {
                     "test.js"
                 ]
             }
+        },
 
+        uglify: {
+            release: {
+                options: {
+                    sourceMap: "namespace.min.map"
+                },
+                files: {
+                    "namespace.min.js": ["namespace.min.js"]
+                }
+            }
         }
     });
 
@@ -66,9 +83,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-contrib-compress");
     grunt.loadNpmTasks("grunt-contrib-testem");
+    grunt.loadNpmTasks("grunt-contrib-copy");
+    grunt.loadNpmTasks('grunt-strip-code');
 
     grunt.registerTask("release", [
-        "clean", "jshint", "testem:ci:dev", "uglify", "compress"
+        "clean", "jshint", "testem:ci:headless", "copy", "strip_code", "uglify", "compress"
     ]);
 
     // When running the default Grunt command, just lint the code.

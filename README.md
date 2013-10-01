@@ -22,6 +22,39 @@ The library is AMD compatible so you can load it with require or import it into 
 <script src='namespace.js' type='text/javascript></script>
 ```
 
+## Api
+
+```js
+   /**
+     * Represents a namespace.
+     * @param options properties for this namespace
+     * @constructor
+     */
+     namespace (options)
+```
+
+```js
+   /**
+     * Find or create a module in the namespace.
+     * @param namespace the name and path of the module
+     * @param options any default properties for the module (if created)
+     * @returns {Object} the module in question
+     */
+     namespace.prototype.import (namespace, options)
+```
+
+```js
+  /**
+    * Register an Object or native value into a module in the namespace.
+    * @param module identifier for space
+    * @param obj item to register
+    * @returns {*} the item registered
+    */
+    namespace.prototype.register (module, obj)
+
+```
+
+
 ## How to use
 
 ### In plain JavaScript:
@@ -85,11 +118,45 @@ define(['app'], function (app) {
 });
 ```
 
+## How to build
+
+```shell
+npm install -g testem
+npm install -g phantomjs
+npm install
+grunt release
+```
+
+## How to test
+
+```shell
+npm install -g testem
+npm install
+testem
+```
+
 ## License
+
+The MIT License (MIT)
 
 Copyright (c) 2013 Adam Balanga
 
-It is free software, and may be redistributed under the terms of MIT license.
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 
 It can be found here: https://github.com/abalanga/namespace
-    
